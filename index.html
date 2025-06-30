@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="breachdark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tabletop Exercise Demo for Leadership | BreachSimRange.io</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkBg: "#101522",
+            breachRed: "#fc3847",
+            breachBlue: "#36bffa",
+            breachWhite: "#f5f6fa",
+            breachGreen: "#23d18b",
+            breachYellow: "#f7b731",
+            glass: "rgba(23,28,38,0.74)"
+          },
+          fontFamily: {
+            heading: ["Inter", "Segoe UI", "Manrope", "Arial", "sans-serif"],
+            sans: ["Inter", "Segoe UI", "Manrope", "Arial", "sans-serif"]
+          }
+        }
+      },
+      daisyui: {
+        themes: [
+          {
+            breachdark: {
+              "primary": "#fc3847",
+              "secondary": "#36bffa",
+              "accent": "#23d18b",
+              "neutral": "#101522",
+              "base-100": "#181a21",
+              "info": "#36bffa",
+              "success": "#23d18b",
+              "warning": "#f7b731",
+              "error": "#fc3847"
+            }
+          }
+        ]
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui@4.10.3/dist/full.js"></script>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    html, body {
+      background: linear-gradient(135deg, #101522 0%, #181a21 100%) !important;
+      color: #f5f6fa;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      max-width: 100vw;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    .bg-glass {
+      background: rgba(23,28,38,0.74) !important;
+      backdrop-filter: blur(18px) saturate(175%) !important;
+      -webkit-backdrop-filter: blur(18px) saturate(175%) !important;
+      border: 2px solid rgba(255,255,255,0.08);
+    }
+    #mainContent, #landingContent, #endingContent {
+      max-width: 65rem; /* wider */
+      margin: auto;
+    }
+    @media (max-width: 1100px) {
+      #mainContent, #landingContent, #endingContent { max-width: 98vw; }
+    }
+    @media (max-width: 900px) {
+      #mainContent, #landingContent, #endingContent { padding: 1.2rem .5rem !important; border-radius: .5rem; }
+      header, .bg-glass { border-radius: .5em; padding: 1.1em 1em; }
+      h1, .font-heading { font-size: 1.2rem !important; }
+      .btn, .btn-lg, .btn-primary, .btn-secondary { font-size: 1em !important; padding: .7em 1.5em !important; width: 100%; min-width: unset !important; }
+      #questionsList { font-size:1em !important; }
+    }
+    @media (max-width: 600px) {
+      #mainContent, #landingContent, #endingContent { padding: .7rem .2rem !important; }
+      .btn, .btn-lg, .btn-primary, .btn-secondary { font-size: 1em !important; padding: .6em 1em !important; width: 100%; }
+      footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: rgba(23,28,38,.9); border-top: 1px solid #212837; padding-bottom: 8px; font-size: .9em; }
+    }
+    body::after {
+      content: "";
+      background: url('https://breachsimrange.io/static/media/bg-circuit.a4a5aebe.svg') no-repeat bottom right;
+      opacity: .04;
+      position: fixed;
+      bottom: 0; right: 0;
+      z-index: 0;
+      width: 60vw; height: 60vh;
+      pointer-events: none;
+    }
+    html, body, #mainContent, .bg-glass, .max-w-4xl { overflow-x: hidden !important; }
+    .ttx-btn {
+      @apply btn btn-lg font-bold border-2;
+      background: #181a21;
+      color: #f5f6fa;
+      border-color: #fc3847;
+      transition: background 0.15s, color 0.15s, box-shadow 0.2s;
+    }
+    .ttx-btn:hover, .ttx-btn:focus {
+      background: #fc3847;
+      color: #fff;
+      border-color: #fc3847;
+      box-shadow: 0 0 12px 2px #fc384799;
+    }
+    .ttx-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    
+    .breach-question-alert {
+      background: linear-gradient(98deg, #11151c 80%, #11151c 120%);
+  border: 1.5px solid #131722;
+  border-radius: 1.1em;
+  color: #f5f6fa;
+  padding: 1.2em 1.5em;
+  margin-bottom: .5em;
+  box-shadow: 0 2px 16px #10121b70;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.16rem;
+  letter-spacing: 0.01em;
+  line-height: 1.65;
+  transition: box-shadow 0.25s, background 0.25s;
+}
+
+.breach-question-alert:hover {
+  background: linear-gradient(103deg, #191a26 75%, #222334 130%);
+  box-shadow: 0 6px 32px #11131e;
+}
+
+.breach-question-alert .font-bold {
+  font-weight: 700;
+  color: #ececec;
+  font-size: 1.22em;
+}
+
+code1 {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-size: 1em;
+  background-color: #9a2b2b;
+  padding: 3px;
+}
+.breach-question-alert--completed {
+  background: linear-gradient(98deg, #11151c 80%, #1b212c 120%);
+  border-color: #51e285;
+  color: #d1ffd9;
+  opacity: 0.93;
+}
+.breach-question-alert--completed .font-bold {
+  color: #92e6ad;
+}
+.breach-question-alert--completed button {
+  color: #51e285;
+}
+
+
+  </style>
+</head>
+<body class="bg-darkBg min-h-screen">
+  <div class="min-h-screen flex flex-col">
+<header class="relative p-4 shadow-xl border-b border-glass bg-glass sticky top-0 z-20 flex items-center">
+<img src="logo.png" alt="Logo" class="absolute left-3 top-1/2 -translate-y-1/2 shadow-md" style="width: 3.6rem; height: 2.5rem;"/>
+
+  <button id="themeToggle" class="btn btn-circle absolute left-4 top-1/2 -translate-y-1/2 ...">
+  </button>
+  <span class="w-full text-center font-heading font-bold text-2xl text-breachWhite">
+   Tabletop Exercise (TTX) Demo
+  </span>
+</header>
+    <main class="flex-1 flex flex-col items-center justify-center px-4 py-6 lg:py-12">
+      <div id="landingContent" class="w-full max-w-5xl bg-glass rounded-3xl shadow-2xl p-10 border border-glass backdrop-blur-xl relative animate-fade-in flex flex-col items-center gap-8">
+        <div class="text-center">
+          <h1 class="font-heading text-4xl md:text-5xl font-extrabold text-breachWhite mb-4 leading-tight">Welcome to the BreachSimRange TTX for the Leadership!</h1>
+          <div class="text-lg text-breachBlue mb-4 font-semibold">A high-fidelity cyber incident tabletop experience for leadership and decision-makers.</div>
+          <div class="max-w-xl mx-auto text-breachWhite/80 text-lg mb-4">
+            <p>This TTX simulation presents a realistic, multi-stage ransomware attack and guides you through critical decisions, communication, and response. <br>
+            <span class="text-breachRed font-bold">Are you ready to lead your organization through a breach?</span></p>
+            <ul class="text-center mt-3 text-base text-breachYellow">
+              <li>&#8226; No actions are recorded, focus is on discussion, not "winning"</li>
+              <li>&#8226; Each stage reveals new challenges and pressures</li>
+              <li>&#8226; Use the Next button to proceed; go back to revisit as needed</li>
+            </ul>
+          </div>
+        </div>
+        <button id="startTtxBtn" class="ttx-btn text-xl px-10 py-3 rounded-full shadow-xl">Start TTX</button>
+      </div>
+      <div id="mainContent" class="w-full max-w-5xl bg-glass rounded-3xl shadow-2xl p-6 md:p-10 border border-glass backdrop-blur-xl relative animate-fade-in hidden">
+        <div class="flex items-center justify-between mb-2">
+          <div class="text-breachWhite text-base opacity-80 font-mono" id="injectCounter">Inject 1/11</div>
+          <div class="flex gap-1">
+            <span id="injectTimeline" class="flex gap-1"></span>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3 mb-2">
+          <div class="text-breachBlue font-bold uppercase tracking-wide text-xs lg:text-sm"><span id="phase"></span></div>
+          <span id="severityBadge" class="badge badge-lg font-bold text-base-100">Critical</span>
+          <span class="ml-auto text-xs text-breachWhite opacity-70 font-mono" id="simulatedTime"></span>
+        </div>
+        <h1 id="injectTitle" class="font-heading text-2xl md:text-3xl font-extrabold text-breachWhite mb-4 leading-tight"></h1>
+        <div id="narrative" class="prose prose-invert max-w-none text-breachWhite text-lg mb-5 font-sans tracking-wide leading-relaxed"></div>
+        <div id="visualDescription" class="rounded-xl bg-black/20 border border-glass px-4 py-3 mb-4 flex flex-col gap-1">
+          <span id="visualText" class="text-breachBlue font-semibold text-base"></span>
+          <span id="visualCaption" class="text-breachWhite text-sm"></span>
+        </div>
+        <div id="technicalClarifications"></div>
+        <br>
+        <div class="mb-3">
+          <div class="text-breachRed text-xl font-semibold mb-2">Discussion Questions:</div>
+          <div id="questionsList" class="flex flex-col gap-4"></div>
+        </div>
+        <div class="flex items-center justify-between gap-6 mt-8">
+          <button class="ttx-btn" id="prevInject">&#8592; Prev</button>
+          <button class="btn" id="nextInject">Next &#8594;</button>
+         
+		  
+        </div>
+      </div>
+      <div id="endingContent" class="w-full max-w-5xl bg-glass rounded-3xl shadow-2xl p-10 border border-glass backdrop-blur-xl relative animate-fade-in flex flex-col items-center gap-8 hidden">
+        <div class="text-center">
+          <h2 class="font-heading text-3xl md:text-4xl font-extrabold text-breachGreen mb-4 leading-tight">Thank You for Participating!</h2>
+          <div class="max-w-xl mx-auto text-breachWhite/90 text-lg mb-4">
+            <p>This TTX is designed to drive collaboration, sharpen decision making, and meaningful discussions. <br>
+              <span class="text-breachYellow font-bold">What will you do differently after today?</span>
+            </p>
+            <div class="mt-6 text-breachWhite/60 text-base">You can restart the TTX or close this window.<br>
+              <span class="text-breachBlue">Contact <a href="https://breachsimrange.io" class="underline hover:text-breachRed">BreachSimRange</a> for full-scale Tabletop exercises and Offensive security consulting.</span>
+            </div>
+          </div>
+        </div>
+        <button id="restartTtxBtn" class="ttx-btn text-xl px-10 py-3 rounded-full shadow-xl">Restart Simulation</button>
+      </div>
+    </main>
+    <footer class="w-full text-center text-breachWhite/40 py-3 text-xs">
+      &copy; 2025 BreachSimRange.io | TTX for executive demonstration only
+    </footer>
+  </div>
+
+   <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* --- BreachSimRange Custom Theme for DaisyUI + Tailwind --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --breachRed: #fc3847;
+  --breachGreen: #34fa81;
+  --breachBlue: #1b98f5;
+  --breachWhite: #f5f6fa;
+  --darkBg: #181a21;
+  --glass: rgba(36,41,56,0.86);
+  --glassBorder: rgba(255,255,255,0.06);
+}
+
+body.bg-darkBg {
+  background: linear-gradient(120deg, #14151a 0%, #232435 100%);
+}
+
+body.bg-breachWhite {
+  background: linear-gradient(120deg, #f5f6fa 0%, #e8e9ef 100%);
+}
+
+.bg-glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(180%);
+}
+.border-glass {
+  border-color: var(--glassBorder)!important;
+}
+
+.text-breachRed { color: var(--breachRed); }
+.text-breachGreen { color: var(--breachGreen); }
+.text-breachBlue { color: var(--breachBlue); }
+.text-breachWhite { color: var(--breachWhite); }
+.bg-breachRed { background: var(--breachRed); }
+.bg-breachGreen { background: var(--breachGreen); }
+.bg-breachBlue { background: var(--breachBlue); }
+.bg-breachWhite { background: var(--breachWhite); }
+
+.btn-primary {
+  background: var(--breachRed)!important;
+  color: var(--breachWhite)!important;
+  border: none;
+}
+.btn-secondary {
+  background: var(--breachBlue)!important;
+  color: var(--breachWhite)!important;
+  border: none;
+}
+
+/* Glass effect + soft shadow */
+.bg-glass, .shadow-2xl {
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.30), 0 1.5px 5px 0 rgba(252,56,71,0.12);
+}
+
+.badge {
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  padding: 0.5em 1em;
+  letter-spacing: 0.04em;
+}
+
+.badge.bg-breachRed { background: var(--breachRed)!important; color: #fff!important; }
+.badge.bg-breachGreen { background: var(--breachGreen)!important; color: #222!important; }
+.badge.bg-yellow-500 { background: #ffe369!important; color: #202020!important; }
+.badge.bg-breachBlue { background: var(--breachBlue)!important; color: #fff!important; }
+
+.animate-fade-in {
+  animation: fade-in 0.44s cubic-bezier(.4,2.14,.46,.98);
+}
+@keyframes fade-in { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none;}}
+
+/* Prose tweaks for readable narrative */
+.prose.prose-invert, .text-breachWhite { color: var(--breachWhite)!important; }
+.prose code, .prose pre, code, pre {
+  background: #1a1c22;
+  color: #ebebeb;
+  border-radius: 8px;
+  padding: 2px 5px;
+  font-size: 0.98em;
+}
+.prose pre { padding: 1em; }
+
+/* Font family fallback for headings */
+.font-heading { font-family: 'Segoe UI', 'Inter', 'Arial', sans-serif; }
+
+/* DaisyUI theme fixes */
+[data-theme=breachdark] { background: #181a21; color: #f5f6fa; }
+[data-theme=breachlight] { background: #f5f6fa; color: #232435; }
+
+/* Responsive for presentation */
+@media (max-width: 640px) {
+  #mainContent { padding: 1.2rem!important; }
+  h1 { font-size: 1.5rem!important; }
+}
+
+/* Subtle hover effect for navigation dots */
+#injectTimeline span:hover { transform: scale(1.14); box-shadow: 0 0 0 2px var(--breachRed); }
+
+/* Hide elements on print */
+@media print { .btn, #themeToggle, #injectTimeline, footer { display:none!important; } }
